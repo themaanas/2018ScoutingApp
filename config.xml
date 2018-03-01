@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns   = "http://www.w3.org/ns/widgets"
+    xmlns:gap   = "http://phonegap.com/ns/1.0"
+    id          = "com.phonegap.example" >
+
+<!-- versionCode is optional and Android only -->
+
+    <name>Mercury 1089 Scouting</name>
+
+    <description>
+        2018 Team Mercury Scouting App.
+    </description>
+    <preference name="android">
+        <icon src="android/mipmap-ldpi/ic_launcher.png" density="ldpi" />
+        <icon src="android/mipmap-mdpi/ic_launcher.png" density="mdpi" />
+        <icon src="android/mipmap-hdpi/ic_launcher.png" density="hdpi" />
+        <icon src="android/mipmap-xhdpi/ic_launcher.png" density="xhdpi" />
+        <icon src="android/mipmap-xxhdpi/ic_launcher.png" density="xxhdpi" />
+        <icon src="android/mipmap-xxxhdpi/ic_launcher.png" density="xxxhdpi" />
+    </preference>
+</widget>

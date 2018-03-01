@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <link rel="stylesheet" href="animate.min.css">
+    <link href="toggle.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+    </style>
+
+</head>
+
+<body style="overflow:hidden;" onload="switchToAuton()">
+
+    <div style="position: absolute; z-index: 999; margin-top: -5px" class="title-bar">
+        <!--        <button onclick="location.replace('index.html')" class="leftArrow"><img width="50" height="50" src="leftArrow.png"></button>-->
+
+        <!--
+        <table style="display: inline-block; margin-left: 10px; margin-top: 10px">
+            <td><div style="margin-top: 27px;" class="switch">
+                <input onclick="toggleBaseline()" id="baselineCross" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+                <label for="baselineCross"></label>
+
+            </div></td>
+            <td><p style="float: left">Baseline</p></td>
+        </table>
+-->
+        <div style="text-align: center" class="buttonCheckboxes">
+            <input id="24" type="radio" onclick="location.replace('index.html')" name="barOptions">
+            <label class="left" for="24">Setup</label>
+            <input id="25" type="radio" onclick="switchToAuton()" name="barOptions" checked>
+            <label for="25">Auton</label>
+            <input id="26" type="radio" onclick="switchToMain()" name="barOptions">
+            <label for="26">Teleop</label>
+            <input id="27" type="radio" onclick="switchToHanging()" name="barOptions">
+            <label for="27" style="width: 140px">Climbing</label>
+            <input id="28" type="radio" name="barOptions">
+            <label class="right" for="28" style="width: 130px" onclick="location.replace('postGame.html')">Postgame</label>
+        </div>
+    </div>
+    <!--    HTML HERE-->
+    <div class="background">
+        <a id="demo01" href="#animatedModal">
+            
+            <img id="picture" style="width: 80vw; height: 40vw; margin-top: 90px;" onclick="point_it(event)" src="fieldSheet.svg"/>
+        
+        </a>
+        <canvas id="picCanvas" style="position: fixed; z-index: 999;"></canvas>
+    </div>
+    <!--Call your modal-->
+    <!--    <a id="demo01" href="#animatedModal">DEMO01</a>-->
+    <!--DEMO01-->
+    <div id="animatedModal">
+        <br><br>
+        <div class="close-animatedModal">
+            <button class="close-animatedModal" onclick="newEvent()" style="left:auto; right: 7%;"><img width="15" height="15" src="check.png"></button>
+
+        </div>
+        <div class="close-animatedModal">
+            <button class="close-animatedModal" onclick="reset()" style="left: 7%; right: auto "><img width="15" height="15" src="close.png"></button>
+
+        </div>
+        <br><br>
+
+        <div id="autonModal" style="text-align: center">
+            <div style="margin-top: -70px" class="modal-content">          
+                <table id="leftCol" class="table-content">
+                    <tr>
+                        <td>
+                            <p class="title">SWITCH</p>
+                            <div class="buttonCheckboxes">
+                                <input type="radio" id="1" value="1" type="radio" name="switch">
+                                <label class="left" for="1">Scored</label>
+                                <input type="radio" id="2" value="0" type="radio" name="switch">
+                                <label class="right" for="2">Missed</label>
+                            </div><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="title">SCALE</p>
+                            <div class="buttonCheckboxes">
+                                <input type="radio" id="3" value="3" type="radio" name="scale">
+                                <label class="left" for="3">High</label>
+                                <input type="radio" id="4" value="2" type="radio" name="scale">
+                                <label for="4">Neutral</label>
+                                <input type="radio" id="81" value="1" type="radio" name="scale">
+                                <label for="81">Low</label>
+                                <input type="radio" id="80" value="0" type="radio" name="scale">
+                                <label class="right" for="80">Missed</label>
+                                <!--HIGH, NEUTRAL, LOW, MISS-->
+                            </div><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="title">AUTOLINE CROSSED</p>
+                            <div class="buttonCheckboxes">
+                                <input type="radio" id="5" value="1" type="radio" name="autoline">
+                                <label class="left" for="5">Yes</label>
+                                <input type="radio" id="6" value="0" type="radio" name="autoline">
+                                <label class="right" for="6">No</label>
+                            </div><br>
+                        </td>
+                    </tr>
+                </table>
+                <table style="width: 50%" id="rightCol" class="table-content">
+                    <tr>
+                        <td>
+                            <p class="title">CUBE</p>
+                            <div class="buttonCheckboxes">
+                                <input type="radio" id="7" value="1" type="radio" name="cube">
+                                <label class="left" for="7">Picked Up</label>
+                                <input type="radio" id="8" value="0" type="radio" name="cube">
+                                <label class="right" for="8">Dropped</label>
+                            </div><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="title">EXCHANGE</p>
+                            <div class="buttonCheckboxes">
+                                <input type="radio" id="9" value="1" type="radio" name="exchange">
+                                <label class="left" for="9">Scored</label>
+                                <input type="radio" id="10" value="0" type="radio" name="exchange">
+                                <label class="right" for="10" style="width: 110px">Attempted</label>
+                            </div><br>
+                        </td>
+                    </tr>
+<!--
+                    <tr>
+                        <td>
+                            <p class="title">MOVED</p>
+                            <div class="buttonCheckboxes">
+                                <input type="radio" id="11" value="0" type="radio" name="autonMoved">
+                                <label class="left" for="11">Yes</label>
+                                <input type="radio" id="12" value="1" type="radio" name="autonMoved">
+                                <label class="right" for="12">No</label>
+                            </div><br>
+                        </td>
+                    </tr>
+-->
+                </table>
+            </div>
+        </div>
+
+        <div id="hangingModal" style="text-align: center">
+            <p class="title">CLIMBED</p>
+            <table>
+        <td style="width: 50%"><div style="margin-top: 27px" class="switch">
+            <input id="climb" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+            <label for="climb"></label>
+
+        </div></td>
+        <td><p style="float: left">Attempted</p></td>
+    </table><br>
+            <div class="buttonCheckboxes">
+                <input type="radio" id="11" value="1" type="radio" name="climbed">
+                <label class="left" for="11">Yes</label>
+                <input type="radio" id="12" value="0" type="radio" name="climbed">
+                <label class="right" for="12">No</label>
+            </div><br><br>
+<!--
+            <p class="title">SOMEONE CLIMBED ON THEM?</p>
+            <div class="buttonCheckboxes">
+                <input type="radio" id="13" value="0" type="radio" name="climbed">
+                <label class="left" for="13">Yes</label>
+                <input type="radio" id="50" value="2" type="radio" name="climbed">
+                <label class="right" style="width: 120px" for="50">No</label>
+            </div>
+-->
+        </div>
+
+        <div id="mainModal">
+            <div style="margin-top: -70px" class="modal-content">
+                <table id="leftCol" class="table-content">
+                    <tr>
+                        <td>
+                            <!--in python figure out the switch that they scored in-->
+                            <p class="title">SWITCH</p>
+                            <div class="buttonCheckboxes">
+                                <input type="radio" id="13" value="1" type="radio" name="switch">
+                                <label class="left" for="13">Scored</label>
+                                <input type="radio" id="14" value="0" type="radio" name="switch">
+                                <label class="right" for="14">Missed</label>
+                            </div><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="title">SCALE</p>
+                            <div class="buttonCheckboxes">
+                                <input type="radio" id="15" value="3" type="radio" name="scale">
+                                <label class="left" for="15">High</label>
+                                <input type="radio" id="16" value="2" type="radio" name="scale">
+                                <label for="16">Neutral</label>
+                                <input type="radio" id="17" value="1" type="radio" name="scale">
+                                <label for="17">Low</label>
+                                <input type="radio" id="18" value="0" type="radio" name="scale">
+                                <label class="right" for="18">Missed</label>
+                            </div><br>
+                        </td>
+                    </tr>
+                </table>
+                <table style="width: 50%" id="rightCol" class="table-content">
+                    <tr>
+                        <td>
+                            <p class="title">CUBE</p>
+                            <div class="buttonCheckboxes">
+                                <input type="radio" id="19" value="1" type="radio" name="cube">
+                                <label class="left" for="19">Picked Up</label>
+                                <input type="radio" id="20" value="0" type="radio" name="cube">
+                                <label class="right" for="20">Dropped</label>
+                            </div><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="title">EXCHANGE</p>
+                            <div class="buttonCheckboxes">
+                                <input type="radio" id="21" value="1" type="radio" name="exchange">
+                                <label class="left" for="21">Scored</label>
+                                <input type="radio" id="22" value="0" type="radio" name="exchange">
+                                <label class="right" for="22">Attempted</label>
+                            </div><br>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="jquery.min.js"></script>
+    <script src="animatedModal.min.js"></script>
+    <script src="main.js"></script>
+    <script>
+        $("#demo01").animatedModal({
+            animatedIn: "bounceInUp",
+            color: "#f5f5f5",
+            animatedOut: "bounceOutDown"
+        });
+    </script>
+</body>
+
+</html>

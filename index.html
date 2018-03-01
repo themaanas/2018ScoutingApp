@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="animate.min.css">
+
+    <style>
+        .title {
+            display: inline-table;
+        }
+
+        body {
+            text-align: center;
+            font-size: 25px;
+        }
+    </style>
+</head>
+
+<body onload="setupInput()">
+    <button id="demo01" href="#animatedModal" class="leftArrow" style="width: 80px">&lt;&#8725;&gt;</button>
+    <button class="leftArrow" onclick="resetFields()"><img src="reset.png" width="30" height="30"></button>
+    <button onclick="startGame()" class="rightArrow" style="width: 80px">Start</button>
+    <br><br>
+    <!--
+    <div class="group">      
+      <input class="matText" type="text" id="fullName" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>FIRST NAME</label>
+    </div>
+    <br><br><br>
+    <div class="group">      
+      <input class="matText" type="tel"  maxlength="3" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>MATCH NUMBER</label>
+    </div>
+    <br><br><br>
+    <div class="group">      
+      <input class="matText" type="tel"  maxlength="3" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>TEAM NUMBER</label>
+    </div>
+    <br><br><br>
+    <div class="group">      
+      <input class="matText" type="tel"  maxlength="3" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>ALLIANCE NUMBER</label>
+    </div>
+-->
+    FIRST NAME:<input type="text" style="text-transform:lowercase;" id="fullName"></input><br><br> MATCH NUMBER:<input type="tel" id="matchNum" maxlength="3"></input><br><br> TEAM NUMBER:<input type="tel" id="teamNum" maxlength="5"></input><br><br> ALLIANCE #:<input type="tel" id="partner1" maxlength="5"></input><input type="tel" id="partner2" maxlength="5"></input> <br><br>
+    <div class="buttonCheckboxes">
+        <span class="redAll">
+            <input type="radio" id="1" value="0" name="allColor">
+            <label class="left" for="1">Red</label>
+        </span>
+        <span class="blueAll">
+            <input type="radio" id="2" value="1" name="allColor">
+            <label class="right" for="2">Blue</label>
+        </span>
+    </div><br><br>
+
+    <div id="animatedModal">
+        <div class="close-animatedModal">
+            <button style="width: 40px; height: 40px; border-radius: 60px;"><img width="15" height="15" src="close.png"></button>
+        </div>
+
+        <div class="modal-content">
+            <button onclick="clearStorage()" style="width:230px; margin-top: 40vh">Reset LocalStorage</button>
+            <br><br>
+            <div class="buttonCheckboxes">
+                <p class="subtitle" style="display: inline">Red side: </p>
+                <button onclick="changeLeft()" style="">Left</button>
+                <button onclick="changeRight()" style="">Right</button>
+            </div>
+
+        </div>
+    </div>
+    <script src="jquery.min.js"></script>
+    <script src="animatedModal.min.js"></script>
+    <script src="main.js"></script>
+    <script>
+        $("#demo01").animatedModal({
+            animatedIn: "bounceInUp",
+            color: "#f5f5f5",
+            animatedOut: "bounceOutDown"
+        });
+    </script>
+</body>
+
+</html>
