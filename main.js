@@ -8,7 +8,7 @@ var ballTotal = 0;
 var gearTotal = 0;
 //VAR FOR KEEPING TRACK OF ANY RADIO BUTTON'S STATUS
 var radioChecked;
-//AUTON, TELEOP, OR HANGING MODES (1 = AUTON, 2 = TELEOP, 3 = HANGING)
+//AUTON, TELEOP, OR HANGING MODES (1 = AUTON, 2 = TELEOP)
 var mode = 1;
 //JUST INITIALIZING X, Y, WIDTH, HEIGHT, AND PRE-EVENT TIME VALUES FOR USE LATER
 var xVal = 0,
@@ -129,13 +129,13 @@ function switchToMain() {
 }
 
 
-//CHANGE THE SCREEN INPUT TO THE MAIN SCREEN IF THE MAIN BUTTONS ARE CHECKED
-function switchToHanging() {
-    mode = 3;
-    $('#autonModal').hide();
-    $('#mainModal').hide();
-    $('#hangingModal').show();
-}
+////CHANGE THE SCREEN INPUT TO THE MAIN SCREEN IF THE MAIN BUTTONS ARE CHECKED
+//function switchToHanging() {
+//    mode = 3;
+//    $('#autonModal').hide();
+//    $('#mainModal').hide();
+//    $('#hangingModal').show();
+//}
 
 //GET COORDS OF TOUCH WHEN THE USER TAPS THE FIELD
 function point_it(event) {
