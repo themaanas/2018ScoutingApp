@@ -14,9 +14,12 @@
         body {
             text-align: center;
             font-size: 25px;
+            height: 100%;
         }
+/*        * { border: 1px solid red; }*/
     </style>
 </head>
+<script src="main.js"></script>
 
 <body onload="setupInput()">
     <button id="demo01" href="#animatedModal" class="leftArrow" style="width: 80px">&lt;&#8725;&gt;</button>
@@ -52,7 +55,10 @@
       <label>ALLIANCE NUMBER</label>
     </div>
 -->
-    FIRST NAME:<input type="text" style="text-transform:lowercase;" id="fullName"></input><br><br> MATCH NUMBER:<input type="tel" id="matchNum" maxlength="3"></input><br><br> TEAM NUMBER:<input type="tel" id="teamNum" maxlength="5"></input><br><br> ALLIANCE #:<input type="tel" id="partner1" maxlength="5"></input><input type="tel" id="partner2" maxlength="5"></input> <br><br>
+    FIRST NAME:<input type="text" style="text-transform:lowercase;" id="fullName"></input><br><br> 
+    MATCH NUMBER:<input type="tel" id="matchNum" maxlength="3"></input><br><br> 
+    TEAM NUMBER:<input type="tel" id="teamNum" maxlength="5"></input><br><br> 
+    ALLIANCE #:<input type="tel" id="partner1" maxlength="5"></input><input type="tel" id="partner2" maxlength="5"></input> <br><br>
     <div class="buttonCheckboxes">
         <span class="redAll">
             <input type="radio" id="1" value="0" name="allColor">
@@ -62,7 +68,15 @@
             <input type="radio" id="2" value="1" name="allColor">
             <label class="right" for="2">Blue</label>
         </span>
-    </div><br><br>
+    </div><br>
+    <div class="buttonCheckboxes" style="margin-top: -10px">
+        <input type="radio" id="3" value="0" name="fieldStartPos">
+        <label class="left" for="3">Near</label>
+        <input type="radio" id="4" value="1" name="fieldStartPos">
+        <label for="4">Middle</label>
+        <input type="radio" id="5" value="2" name="fieldStartPos">
+        <label class="right" for="5">Far</label>
+    </div>
 
     <div id="animatedModal">
         <div class="close-animatedModal">
