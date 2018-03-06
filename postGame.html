@@ -29,16 +29,47 @@
     </div>
 -->
     <table>
+    <tr>
+        <td style="width: 50%">
+            <table>
+                <td>
+                    <div style="margin-top: 27px" class="switch">
+                        <input id="defense" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+                        <label for="defense"></label>
+                    </div>
+                </td>
+                <td>
+                    <p style="float: left">Defense</p>
+                </td>
+            </table>
+        </td>
+        <td style="width: 50%">
+            <table>
+                <td>
+                    <div style="margin-top: 27px" class="switch">
+                        <input id="levitate" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+                        <label for="levitate"></label>
+                    </div>
+                </td>
+                <td>
+                    <p style="float: left">Levitate</p>
+                </td>
+            </table>
+        </td>
+    </tr>
+<!--
+    <tr>
         <td style="width: 50%">
             <div style="margin-top: 27px" class="switch">
-                <input id="defense" onclick="defenseToggle()" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
-                <label for="defense"></label>
-
+                <input id="platform" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+                <label for="platform"></label>
             </div>
         </td>
         <td>
-            <p style="float: left">Defense</p>
+            <p style="float: left">Platform</p>
         </td>
+    </tr>
+-->
     </table>
     <!--
     <table>
@@ -112,13 +143,13 @@
     </table>
     <div class="buttonCheckboxes">
         <p class="subtitle" style="display: inline">Orientation:</p>
-        <input type="radio" id="1" value="0" type="radio" name="teleSwitch">
+        <input type="radio" id="1" value="0" type="radio" name="orientation">
         <label class="left" for="1">LLL</label>
-        <input type="radio" id="2" value="0" type="radio" name="teleSwitch">
+        <input type="radio" id="2" value="1" type="radio" name="orientation">
         <label for="2">RRR</label>
-        <input type="radio" id="3" value="0" type="radio" name="teleSwitch">
+        <input type="radio" id="3" value="2" type="radio" name="orientation">
         <label for="3">LRL</label>
-        <input type="radio" id="4" value="1" type="radio" name="teleSwitch">
+        <input type="radio" id="4" value="3" type="radio" name="orientation">
         <label class="right" for="4">RLR</label>
     </div><br>
     <button onclick="genQr()" style="height: 55px; width: 65px"><a id="demo01" href="#animatedModal"><img style="margin-top: 4px" width="40" height="40" src="qrcode.png"></a></button><br><br>

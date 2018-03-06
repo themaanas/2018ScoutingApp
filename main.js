@@ -17,6 +17,9 @@ var xVal = 0,
     imgHeight = 0,
     timeString = "";
 
+//session orientation. 0=red is left, 1=red is right
+var orient = 0;
+
 function changeLeft() {
     localStorage.setItem("orientation", 0);
 }
@@ -45,6 +48,7 @@ $('body').on('touchmove', function (event) {
 
 //POPULATE THE PREMATCH FIELDS WITH DATA IF IT EXISTS
 function setupInput() {
+    updateRadios();
     //IF THERE'S SOMETHING SAVED FOR THE CURRENT TEAM AND MATCH NUMBER, POPULATE THE FIELDS WITH THAT DATA
     if (SETUP_REF() !== null) {
         var setupLists = localStorage.getItem(SETUP_REF()).split(",");
@@ -74,6 +78,11 @@ function resetFields() {
     }
 }
 
+//x1/y1 is top left, x2/y2 is bottom right, x3/y3 is position to check
+function checkInRange(x1, y1, x2, y2, x3, y3) {
+    return (x3 >= x1 && x3 <= x2) && (y3 >= y1 && y3 <= y2);
+}
+
 //SAVE ALL PREMATCH DATA TO LOCALSTORAGE AND START MATCH
 function startGame() {
     mode = 1;
@@ -91,7 +100,8 @@ function startGame() {
                      PARTNER_2,
                      getTime(),
                      ALLIANCE_COLOR,
-                     localStorage.getItem("orientation")];
+                     localStorage.getItem("orientation"),
+                     $("input[name='fieldStartPos']:checked").val()];
 
     localStorage.setItem("currentMatch", MATCH_NUMBER);
     localStorage.setItem("currentTeam", TEAM_NUMBER);
@@ -111,12 +121,19 @@ function getTime() {
 function switchToAuton() {
     
     mode = 1;
-    $('#autonModal').show();
-    $('#mainModal').hide();
+    $('#autonModal').hide();
+    $('#mainModal').show();
     $('#hangingModal').hide();
-//    if (localStorage.getItem("orientation") == 0)
-//        document.getElementById("picture").src = "fieldSheet.svg";
-//    else
+    var c = document.getElementById("picCanvas");
+    c.height = 0;
+    c.width = 0;
+    document.getElementById("picture").src = "fieldSheet.svg";
+    if (localStorage.getItem("orientation") == 0){
+        $("#picture").css({'transform': 'rotate(0deg)'});
+    } else {
+        $("#picture").css({'transform': 'rotate(180deg)'});
+    }
+    orient = localStorage.getItem("orientation");
 //        document.getElementById("picture").src = "fieldSheet2.png";
 }
 
@@ -129,16 +146,20 @@ function switchToMain() {
 }
 
 
-////CHANGE THE SCREEN INPUT TO THE MAIN SCREEN IF THE MAIN BUTTONS ARE CHECKED
-//function switchToHanging() {
-//    mode = 3;
-//    $('#autonModal').hide();
-//    $('#mainModal').hide();
-//    $('#hangingModal').show();
-//}
+//CHANGE THE SCREEN INPUT TO THE MAIN SCREEN IF THE MAIN BUTTONS ARE CHECKED
+function switchToHanging() {
+    mode = 3;
+    $('#autonModal').hide();
+    $('#mainModal').hide();
+    $('#hangingModal').show();
+}
 
 //GET COORDS OF TOUCH WHEN THE USER TAPS THE FIELD
 function point_it(event) {
+    $("#mainTable tr").remove();
+    $('#mainTable > tbody:last-child').append('<tr><td><p class="title">CUBE</p><div class="buttonCheckboxes"><input type="radio" id="7" value="1" type="radio" name="cube"><label class="left" style="width: 130px;" for="7">Picked Up</label>  <input type="radio" id="8" value="0" type="radio" name="cube"><label class="right" for="8">Dropped</label></div><br></td></tr>');
+    
+    
     var img = new Image();
     img.src = document.getElementById("picture");
     imgWidth = document.getElementById("picture").clientWidth;
@@ -156,19 +177,48 @@ function point_it(event) {
     var cellWidth = document.getElementById("picture").clientWidth / 16;
     var cellHeight = document.getElementById("picture").clientHeight / 8;
 //    ctx.moveTo(event.offsetX,event.offsetY);
+//    alert(orient);
+    if (orient == 1) {
+        xVal = imgWidth-xVal;
+        yVal = imgHeight-yVal;
+    }
+        
     ctx.fillRect(document.getElementById("picture").offsetLeft + cellWidth * getXSquare(xVal),        //x-val
                  document.getElementById("picture").offsetTop + cellHeight * getYSquare(yVal),        //y-val
                  cellWidth,     //width
                  cellHeight);   //height
-    
+//    alert(checkInRange(2,1,5,6,getXSquare(xVal),getYSquare(yVal)));
 //    alert(getXSquare(xVal) + ", " + getYSquare(Y_COORD));
 //    alert("hi");
-//    setTimeout(function(){
-//        c.height = 0;
-//        c.width = 0;
-//    }, 1000);
-//    c.height = 0;
-//    c.width = 0;
+    //autoline
+    if ((checkInRange(0,0,2,7,getXSquare(xVal),getYSquare(yVal)) || checkInRange(13,0,15,7,getXSquare(xVal),getYSquare(yVal))) && mode == 1) {
+        $('#mainTable tr:last').after('<tr> <td> <p class="title">AUTOLINE CROSSED</p> <div class="buttonCheckboxes"> <input type="radio" id="5" value="1" type="radio" name="autoline"> <label class="left" for="5">Yes</label> <input type="radio" id="6" value="0" type="radio" name="autoline"> <label class="right" for="6">No</label> </div><br> </td> </tr>');
+    }
+    
+    //exchange
+    if (checkInRange(0,2,1,3,getXSquare(xVal),getYSquare(yVal)) || checkInRange(14,4,15,5,getXSquare(xVal),getYSquare(yVal))) {
+        $('#mainTable tr:last').after('<tr> <td> <p class="title">EXCHANGE</p> <div class="buttonCheckboxes"> <input type="radio" id="21" value="1" type="radio" name="exchange"> <label class="left" for="21">Scored</label> <input type="radio" id="22" value="0" type="radio" name="exchange"> <label class="right" for="22" style="width: 130px">Attempted</label> </div><br> </td> </tr>');
+    }
+    
+    //switch
+    if (checkInRange(2,1,5,6,getXSquare(xVal),getYSquare(yVal)) || checkInRange(10,1,13,6,getXSquare(xVal),getYSquare(yVal))) {
+        $('#mainTable tr:last').after('<tr> <td> <p class="title">SWITCH</p> <div class="buttonCheckboxes"> <input type="radio" id="1" value="1" type="radio" name="switch"> <label class="left" for="1">Scored</label> <input type="radio" id="2" value="0" type="radio" name="switch"> <label class="right" for="2">Missed</label> </div><br> </td> </tr>');
+    }
+    
+    //scale
+    if (checkInRange(7,0,8,7,getXSquare(xVal),getYSquare(yVal)) || checkInRange(6,1,9,2,getXSquare(xVal),getYSquare(yVal)) || checkInRange(6,5,9,6,getXSquare(xVal),getYSquare(yVal))) {
+        $('#mainTable tr:last').after('<tr> <td> <p class="title">SCALE</p> <div class="buttonCheckboxes"> <input type="radio" id="3" value="3" type="radio" name="scale"> <label class="left" for="3">High</label> <input type="radio" id="4" value="2" type="radio" name="scale"> <label for="4">Neutral</label> <input type="radio" id="81" value="1" type="radio" name="scale"> <label for="81">Low</label> <input type="radio" id="80" value="0" type="radio" name="scale"> <label class="right" for="80">Missed</label></div><br> </td> </tr>');
+    }
+    
+    //climbing
+    if (checkInRange(7,3,8,4,getXSquare(xVal),getYSquare(yVal)) && mode == 2) {
+        $('#mainTable tr:last').after('<tr><td> <p class="title">CLIMBED</p> <table> <td style="width: 50%"> <div style="margin-top: 27px" class="switch"> <input id="climb" onclick="climbingCheck()" class="cmn-toggle cmn-toggle-round-flat" type="checkbox"> <label for="climb"></label> </div> </td> <td> <p style="float: left">Attempted</p> </td> </table><br> <div class="buttonCheckboxes"> <input type="radio" id="11" value="1" type="radio" name="climbed" disabled> <label class="left" for="11">Success</label> <input type="radio" id="12" value="0" type="radio" name="climbed" disabled> <label class="right" for="12">Failed</label> </div><br><br></td></tr>');
+    }
+    updateRadios();
+//    //platform
+//    if (checkInRange(6,2,9,5,getXSquare(xVal),getYSquare(yVal)) && mode == 2) {
+//        $('#mainTable tr:last').after('<tr> <td> <p class="title">PLATFORM</p> <div class="buttonCheckboxes"> <input type="radio" id="30" value="0" type="radio" name="platform"> <label class="left" for="30">Yes</label> <input type="radio" id="31" value="1" type="radio" name="platform"> <label class="right" for="31">No</label> </div><br> </td> </tr>');
+//    }
 }
 function getXSquare(x) {
     return Math.floor(x/(document.getElementById("picture").clientWidth/16));
@@ -178,15 +228,30 @@ function getYSquare(x) {
     return Math.floor(x/(document.getElementById("picture").clientHeight/8));
 }
 
+//function locationSquare(x,y) {
+//    if 
+//}
+
 //IF THE SAME RADIO BUTTON IS CHECKED AND THEN CLICKED, UNCHECK THAT BUTTON
-$("input[type='radio']").click(function () {
-    if (radioChecked == this && this.name !== "barOptions") {
-        this.checked = false;
-        radioChecked = null;
+function updateRadios() {
+    $("input[type='radio']").click(function () {
+        if (radioChecked == this && this.name !== "barOptions") {
+            this.checked = false;
+            radioChecked = null;
+        } else {
+            radioChecked = this;
+        }
+    });
+}
+
+function climbingCheck() {
+    if ($("#climb").prop("checked")) {
+        $("input[name='climbed']").attr('disabled', false);
     } else {
-        radioChecked = this;
+        $("input[name='climbed']").attr('disabled', true);
+        $("input[name='climbed']").attr('checked', false);
     }
-});
+}
 
 //WHEN A USER CLICKS THE CHECK MARK, ADD A NEW EVENT 
 function newEvent() {
@@ -194,7 +259,7 @@ function newEvent() {
     var TEMP_EVENT = [];
     var Y_COORD = Math.round(492 - ((492 / imgHeight) * yVal));
     var X_COORD = Math.round((655 / imgWidth) * xVal);
-
+//    if (!!$("input[name='switch']:checked").val())
     /*  MODE #'s:
         Switch: 0
         Scale: 1
@@ -208,83 +273,86 @@ function newEvent() {
     if (!!$("input[name='switch']:checked").val()) {
         eventList = eventList + [timeString,
                                  getTime(),
-                                 X_COORD,
-                                 Y_COORD,
+                                 getXSquare(xVal),
+                                 getYSquare(yVal),
                                  mode,
                                  0,
-                                 $("input[name='autonSwitch']:checked").val(),
-                                 null];
+                                 $("input[name='switch']:checked").val()];
     }
 
     //MODE: SCALE
     if (!!$("input[name='scale']:checked").val()) {
         eventList = eventList + [timeString,
                                  getTime(),
-                                 X_COORD,
-                                 Y_COORD,
+                                 getXSquare(xVal),
+                                 getYSquare(yVal),
                                  mode,
                                  1,
-                                 $("input[name='autonScale']:checked").val(),
-                                 null];
+                                 $("input[name='scale']:checked").val()];
     }
 
     //MODE: AUTOLINE
     if (!!$("input[name='autoline']:checked").val()) {
         eventList = eventList + [timeString,
                                  getTime(),
-                                 X_COORD,
-                                 Y_COORD,
+                                 getXSquare(xVal),
+                                 getYSquare(yVal),
                                  mode,
                                  2,
-                                 $("input[name='autoline']:checked").val(),
-                                 null];
+                                 $("input[name='autoline']:checked").val()];
     }
 
     //MODE: CUBE
     if (!!$("input[name='cube']:checked").val()) {
         eventList = eventList + [timeString,
                                  getTime(),
-                                 X_COORD,
-                                 Y_COORD,
+                                 getXSquare(xVal),
+                                 getYSquare(yVal),
                                  mode,
                                  3,
-                                 $("input[name='cube']:checked").val(),
-                                 null];
+                                 $("input[name='cube']:checked").val()];
     }
 
     //MODE: EXCHANGE
     if (!!$("input[name='exchange']:checked").val()) {
         eventList = eventList + [timeString,
                                  getTime(),
-                                 X_COORD,
-                                 Y_COORD,
+                                 getXSquare(xVal),
+                                 getYSquare(yVal),
                                  mode,
                                  4,
-                                 $("input[name='exchange']:checked").val(),
-                                 null];
+                                 $("input[name='exchange']:checked").val()];
     }
 
-    //MODE: CLIMBED
-    if (mode == 3) {
-        if (document.getElementById("climb").checked) {
-            eventList = eventList + [timeString, 
-                                     getTime(), 
-                                     X_COORD, 
-                                     Y_COORD, 
-                                     mode, 
-                                     5, 
-                                     1, 
-                                     $("input[name='climbed']:checked").val()];
-        } else {
-            eventList = eventList + [timeString, 
-                                     getTime(), 
-                                     X_COORD, 
-                                     Y_COORD, 
-                                     mode, 
-                                     5, 
-                                     0, 
-                                     null];
-        }
+//    //MODE: CLIMBED
+//    if (document.getElementById("climb").checked) {
+//        eventList = eventList + [timeString, 
+//                                 getTime(), 
+//                                 getXSquare(xVal), 
+//                                 getYSquare(yVal), 
+//                                 mode, 
+//                                 5, 
+//                                 null];
+//    } else {
+//        eventList = eventList + [timeString, 
+//                                 getTime(), 
+//                                 getXSquare(xVal), 
+//                                 getYSquare(yVal), 
+//                                 mode, 
+//                                 5,
+//                                 null];
+//    }
+//    
+    if (checkInRange(0,2,1,3,getXSquare(xVal),getYSquare(yVal)) || checkInRange(14,4,15,5,getXSquare(xVal),getYSquare(yVal))) {
+        eventList[eventList.length-1][7] = 0;
+    } else if (checkInRange(2,1,5,6,getXSquare(xVal),getYSquare(yVal)) || checkInRange(10,1,13,6,getXSquare(xVal),getYSquare(yVal))) {
+        eventList[eventList.length-1][7] = 1;
+    } else if (checkInRange(7,0,8,7,getXSquare(xVal),getYSquare(yVal)) || checkInRange(6,1,9,2,getXSquare(xVal),getYSquare(yVal)) || checkInRange(6,5,9,6,getXSquare(xVal),getYSquare(yVal))) {
+        eventList[eventList.length-1][7] = 2;
+    } else if (checkInRange(6,2,9,5,getXSquare(xVal),getYSquare(yVal))) {
+        eventList[eventList.length-1][7] = 3;
+    } else if (checkInRange(6,2,9,5,getXSquare(xVal),getYSquare(yVal)) && (checkInRange(7,0,8,7,getXSquare(xVal),getYSquare(yVal)) || checkInRange(6,1,9,2,getXSquare(xVal),getYSquare(yVal)) || checkInRange(6,5,9,6,getXSquare(xVal),getYSquare(yVal)))) {
+        eventList[eventList.length-1][7] = 4;
     }
     //CHECK IF THERE IS ALREADY DATA FOR THAT MATCH, AND EITHER APPEND OR START THE NEW LOCALSTORAGE
     if (localStorage.getItem(EVENT_REF()) != null) {
@@ -370,10 +438,12 @@ function popPost() {
 //SAVE THE POSTGAME DATA TO THE LOCALSTORAGE
 function localPost(clickID) {
     var postGame = [
+                    (document.getElementById("defense").checked ? 1 : 0),
+                    (document.getElementById("levitate").checked ? 1 : 0),
                     (document.getElementById("driver").checked ? 1 : 0),
                     (document.getElementById("break").checked ? 1 : 0),
                     (document.getElementById("noshow").checked ? 1 : 0),
-                    ];
+                    $("input[name='cube']:checked").val()];
     localStorage.setItem(POST_REF(), String(postGame));
     if (clickID == "closePost") {
         window.location.replace("mainSheet.html");

@@ -67,7 +67,7 @@
         <br><br>
 
         <div id="autonModal" style="text-align: center">
-            <div style="margin-top: -70px" class="modal-content">          
+ <!--           <div style="margin-top: -70px" class="modal-content">
                 <table id="leftCol" class="table-content">
                     <tr>
                         <td>
@@ -92,7 +92,7 @@
                                 <label for="81">Low</label>
                                 <input type="radio" id="80" value="0" type="radio" name="scale">
                                 <label class="right" for="80">Missed</label>
-                                <!--HIGH, NEUTRAL, LOW, MISS-->
+                                HIGH, NEUTRAL, LOW, MISS
                             </div><br>
                         </td>
                     </tr>
@@ -127,11 +127,11 @@
                                 <input type="radio" id="9" value="1" type="radio" name="exchange">
                                 <label class="left" for="9">Scored</label>
                                 <input type="radio" id="10" value="0" type="radio" name="exchange">
-                                <label class="right" for="10" style="width: 110px">Attempted</label>
+                                <label class="right" for="10" style="width: 130px">Attempted</label>
                             </div><br>
                         </td>
                     </tr>
-<!--
+                    
                     <tr>
                         <td>
                             <p class="title">MOVED</p>
@@ -143,44 +143,68 @@
                             </div><br>
                         </td>
                     </tr>
--->
+
                 </table>
-            </div>
+</div> -->
         </div>
 
         <div id="hangingModal" style="text-align: center">
+<!--
+<tr>
+<td>
             <p class="title">CLIMBED</p>
             <table>
-        <td style="width: 50%"><div style="margin-top: 27px" class="switch">
-            <input id="climb" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
-            <label for="climb"></label>
+                <td style="width: 50%">
+                    <div style="margin-top: 27px" class="switch">
+                        <input id="climb" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+                        <label for="climb"></label>
 
-        </div></td>
-        <td><p style="float: left">Attempted</p></td>
-    </table><br>
+                    </div>
+                </td>
+                <td>
+                    <p style="float: left">Attempted</p>
+                </td>
+            </table><br>
             <div class="buttonCheckboxes">
                 <input type="radio" id="11" value="1" type="radio" name="climbed">
                 <label class="left" for="11">Yes</label>
                 <input type="radio" id="12" value="0" type="radio" name="climbed">
                 <label class="right" for="12">No</label>
             </div><br><br>
-<!--
-            <p class="title">SOMEONE CLIMBED ON THEM?</p>
-            <div class="buttonCheckboxes">
-                <input type="radio" id="13" value="0" type="radio" name="climbed">
-                <label class="left" for="13">Yes</label>
-                <input type="radio" id="50" value="2" type="radio" name="climbed">
-                <label class="right" style="width: 120px" for="50">No</label>
-            </div>
+</td>
+</tr>
 -->
+            <!--
+                    <p class="title">SOMEONE CLIMBED ON THEM?</p>
+                    <div class="buttonCheckboxes">
+                        <input type="radio" id="13" value="0" type="radio" name="climbed">
+                        <label class="left" for="13">Yes</label>
+                        <input type="radio" id="50" value="2" type="radio" name="climbed">
+                        <label class="right" style="width: 120px" for="50">No</label>
+                    </div>
+        -->
         </div>
 
         <div id="mainModal">
             <div style="margin-top: -70px" class="modal-content">
+                <table id="mainTable">
+                    <tr>
+                        <td>
+                            <p class="title">CUBE</p>
+                            <div class="buttonCheckboxes">
+                                <input type="radio" id="7" value="1" type="radio" name="cube">
+                                <label class="left" style="width: 130px;" for="7">Picked Up</label>
+                                <input type="radio" id="8" value="0" type="radio" name="cube">
+                                <label class="right" for="8">Dropped</label>
+                            </div><br>
+                        </td>
+                    </tr>
+                </table>
+<!--
                 <table id="leftCol" class="table-content">
                     <tr>
                         <td>
-                            <!--in python figure out the switch that they scored in-->
+                            in python figure out the switch that they scored in
                             <p class="title">SWITCH</p>
                             <div class="buttonCheckboxes">
                                 <input type="radio" id="13" value="1" type="radio" name="switch">
@@ -205,19 +229,31 @@
                             </div><br>
                         </td>
                     </tr>
-                </table>
-                <table style="width: 50%" id="rightCol" class="table-content">
                     <tr>
                         <td>
-                            <p class="title">CUBE</p>
+                            <p class="title">CLIMBED</p>
+                            <table>
+                                <td style="width: 50%">
+                                    <div style="margin-top: 27px" class="switch">
+                                        <input id="climb" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+                                        <label for="climb"></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p style="float: left">Attempted</p>
+                                </td>
+                            </table><br>
                             <div class="buttonCheckboxes">
-                                <input type="radio" id="19" value="1" type="radio" name="cube">
-                                <label class="left" for="19">Picked Up</label>
-                                <input type="radio" id="20" value="0" type="radio" name="cube">
-                                <label class="right" for="20">Dropped</label>
-                            </div><br>
+                                <input type="radio" id="11" value="1" type="radio" name="climbed">
+                                <label class="left" for="11">Yes</label>
+                                <input type="radio" id="12" value="0" type="radio" name="climbed">
+                                <label class="right" for="12">No</label>
+                            </div><br><br>
                         </td>
                     </tr>
+                </table>
+                <table style="width: 50%" id="rightCol" class="table-content">
+                    
                     <tr>
                         <td>
                             <p class="title">EXCHANGE</p>
@@ -225,11 +261,12 @@
                                 <input type="radio" id="21" value="1" type="radio" name="exchange">
                                 <label class="left" for="21">Scored</label>
                                 <input type="radio" id="22" value="0" type="radio" name="exchange">
-                                <label class="right" for="22">Attempted</label>
+                                <label class="right" for="22" style="width: 130px">Attempted</label>
                             </div><br>
                         </td>
                     </tr>
                 </table>
+-->
             </div>
         </div>
     </div>
