@@ -1,6 +1,6 @@
-.switch {
+/*.switch {
     float: right
-}
+}*/
 .cmn-toggle {
   position: absolute;
   visibility: hidden;
@@ -14,8 +14,8 @@
 }
 input.cmn-toggle-round-flat + label {
   padding: 2px;
-  width: 45px;
-  height: 23px;
+  width: 90px;
+  height: 45px;
     top: -12px;
   background-color: #dddddd;
   border-radius: 60px;
@@ -40,15 +40,15 @@ input.cmn-toggle-round-flat + label:after {
   top: 4px;
   left: 4px;
   bottom: 4px;
-  width: 17px;
+  width: 42px;
   background-color: #dddddd;
-  border-radius: 52px;
+  border-radius: 60px;
   transition: margin 0.4s, background 0.4s;
 }
 input.cmn-toggle-round-flat:checked + label {
   background-color: #FFB56B;
 }
 input.cmn-toggle-round-flat:checked + label:after {
-  margin-left: 20px;
+  margin-left: 40px;
   background-color: #FFB56B;
 }

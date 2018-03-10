@@ -3,8 +3,8 @@
 
 <head>
 
+    <link rel="stylesheet" href="animate-bounceIn.css">    
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="animate.min.css">
 
     <style>
         .title {
@@ -22,88 +22,100 @@
 <script src="main.js"></script>
 
 <body onload="setupInput()">
-    <button id="demo01" href="#animatedModal" class="leftArrow" style="width: 80px">&lt;&#8725;&gt;</button>
-    <button class="leftArrow" onclick="resetFields()"><img src="reset.png" width="30" height="30"></button>
-    <button onclick="startGame()" class="rightArrow" style="width: 80px">Start</button>
-    <br><br>
-    <!--
-    <div class="group">      
-      <input class="matText" type="text" id="fullName" required>
-      <span class="highlight"></span>
-      <span class="bar"></span>
-      <label>FIRST NAME</label>
-    </div>
-    <br><br><br>
-    <div class="group">      
-      <input class="matText" type="tel"  maxlength="3" required>
-      <span class="highlight"></span>
-      <span class="bar"></span>
-      <label>MATCH NUMBER</label>
-    </div>
-    <br><br><br>
-    <div class="group">      
-      <input class="matText" type="tel"  maxlength="3" required>
-      <span class="highlight"></span>
-      <span class="bar"></span>
-      <label>TEAM NUMBER</label>
-    </div>
-    <br><br><br>
-    <div class="group">      
-      <input class="matText" type="tel"  maxlength="3" required>
-      <span class="highlight"></span>
-      <span class="bar"></span>
-      <label>ALLIANCE NUMBER</label>
-    </div>
--->
-    FIRST NAME:<input type="text" style="text-transform:lowercase;" id="fullName"></input><br><br> 
-    MATCH NUMBER:<input type="tel" id="matchNum" maxlength="3"></input><br><br> 
-    TEAM NUMBER:<input type="tel" id="teamNum" maxlength="5"></input><br><br> 
-    ALLIANCE #:<input type="tel" id="partner1" maxlength="5"></input><input type="tel" id="partner2" maxlength="5"></input> <br><br>
-    <div class="buttonCheckboxes">
-        <span class="redAll">
-            <input type="radio" id="1" value="0" name="allColor">
-            <label class="left" for="1">Red</label>
-        </span>
-        <span class="blueAll">
-            <input type="radio" id="2" value="1" name="allColor">
-            <label class="right" for="2">Blue</label>
-        </span>
-    </div><br>
-    <div class="buttonCheckboxes" style="margin-top: -10px">
-        <input type="radio" id="3" value="0" name="fieldStartPos">
-        <label class="left" for="3">Near</label>
-        <input type="radio" id="4" value="1" name="fieldStartPos">
-        <label for="4">Middle</label>
-        <input type="radio" id="5" value="2" name="fieldStartPos">
-        <label class="right" for="5">Far</label>
+    <div class="modalShade"></div>
+
+    <button id="demo01" href="#animatedModal" class="leftArrow settings" style="width: 80px">&lt;&#8725;&gt;</button>
+    <button class="leftArrow clearAll" onclick="resetFields()">Reset</button>
+    <div class="preMatch">
+        <label for="fullName">SCOUTER NAME:</label>
+        <input type="text" id="fullName"></input>
+
+        <label for="matchNum">MATCH NUMBER:</label>
+        <input type="text" id="matchNum" maxlength="3"></input>
+
+        <label for="teamNum">TEAM NUMBER:</label>
+        <input type="tel" id="teamNum" maxlength="5"></input>
+
+        <div class="twoThirds">
+            <label for="partner1">ALLIANCE #:</label><br/>
+            <input type="tel" id="partner1" maxlength="5"></input>
+            <input type="tel" id="partner2" maxlength="5"></input>
+        </div>
+
+        <div class="oneThird buttonCheckboxes">
+            ALLIANCE COLOR:
+            <br>
+            <span class="redAll">
+                <input type="radio" id="1" value="0" name="allColor">
+                <label class="left" for="1">Red</label>
+            </span>
+            <span class="blueAll">
+                <input type="radio" id="2" value="1" name="allColor">
+                <label class="right" for="2">Blue</label>
+            </span>
+        </div>
+        <div class="clear"></div>
+
+        <div class="buttonCheckboxes">
+            STARTING POSITION:
+            <br>
+            <input type="radio" id="3" value="0" name="fieldStartPos">
+            <label class="left" for="3">Close</label>
+            
+            <input type="radio" id="4" value="1" name="fieldStartPos">
+            <label for="4">Middle</label>
+
+            <input type="radio" id="5" value="2" name="fieldStartPos">
+            <label class="right" for="5">Far</label>
+        </div>
+
+        <div class="buttonCheckboxes">
+          ORIENTATION:
+          <br>
+          <input type="radio" id="6" value="0" type="radio" name="orientation">
+          <label class="left" for="6">LLL</label>
+          <input type="radio" id="7" value="1" type="radio" name="orientation">
+          <label for="7">RRR</label>
+          <input type="radio" id="8" value="2" type="radio" name="orientation">
+          <label for="8">LRL</label>
+          <input type="radio" id="9" value="3" type="radio" name="orientation">
+          <label class="right" for="9">RLR</label>
+        </div>
+
+        <div class="clear"></div>
+        <button onclick="startGame()" class="startButton">Start &raquo;</button>
     </div>
 
     <div id="animatedModal">
         <div class="close-animatedModal">
-            <button style="width: 40px; height: 40px; border-radius: 60px;"><img width="15" height="15" src="close.png"></button>
+            <button style="width: 40px; height: 40px; border-radius: 60px;">&times;</button>
         </div>
 
         <div class="modal-content">
-            <button onclick="clearStorage()" style="width:230px; margin-top: 40vh">Reset LocalStorage</button>
+            <button onclick="clearStorage()" style="width:230px;" class="resetFieldsButton">Reset LocalStorage</button>
             <br><br>
             <div class="buttonCheckboxes">
-                <p class="subtitle" style="display: inline">Red side: </p>
-                <button onclick="changeLeft()" style="">Left</button>
-                <button onclick="changeRight()" style="">Right</button>
-            </div>
-
+                RED DRIVER STATION
+                <br>
+                <input type="radio" id="redDSLeft" value="0" type="radio" name="changeDriverStation" 
+                   onclick="changeLeft()">
+                <label class="left" for="redDSLeft">Left</label>
+                <input type="radio" id="redDSRight" value="1" type="radio" name="changeDriverStation" 
+                   onclick="changeRight()">
+                <label class="right" for="redDSRight">Right</label>
+          </div>
         </div>
     </div>
     <script src="jquery.min.js"></script>
-    <script src="animatedModal.min.js"></script>
+    <!--<script src="animatedModal.min.js"></script>-->
     <script src="main.js"></script>
-    <script>
-        $("#demo01").animatedModal({
-            animatedIn: "bounceInUp",
-            color: "#f5f5f5",
-            animatedOut: "bounceOutDown"
-        });
-    </script>
+<script>
+  $('#demo01, .close-animatedModal, #redDSLeft, #redDSRight, .resetFieldsButton, .modalShade').click(function() {
+    $('#demo01').toggleClass('active');
+    $('.modalShade').toggleClass('active');
+    $('#animatedModal').toggleClass('active animated bounceIn');
+  });
+</script>
 </body>
 
 </html>

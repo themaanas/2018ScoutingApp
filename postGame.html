@@ -6,19 +6,18 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="toggle.css">
-    <link rel="stylesheet" href="animate.min.css">
+    <link rel="stylesheet" href="animate-bounceIn.css">
     <script src="qrcode.js"></script>
 
 </head>
 
 <body style="text-align: center" onload="popPost()">
-    <br><br>
-    <div style="position: fixed;text-align: center;float: right;cursor:pointer;top: 10px;margin-bottom: 0px;right: 10px;z-index: 999;">
-        <button onclick="localPost(this.id)" id="closePost" style="width: 60px; height: 60px; border-radius: 60px;"><img width="15" height="15" src="close.png"></button>
-
+    <div class="modalShade"></div>
+    <div>
+        <button onclick="localPost(this.id)" id="closePost">&laquo; Back to map</button>
     </div>
-    <br><br>
-    <p class="title" style="margin-top: -70px">POST-GAME</p>
+    <div class="clear"></div>
+    <p class="title">POST-GAME</p>
     <!--
     <div class="buttonCheckboxes">
     <p class="subtitle" style="display: inline">Fell Over:</p>
@@ -27,7 +26,32 @@
     <input id="35" value="1" type="radio" name="fuelFromFloor">
     <label class="right" for="35">50%</label>
     </div>
--->
+    -->
+    <div class="switch">
+        <input id="defense" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+        <label for="defense">
+            <span>Played Defense (for more than half the match)</span>
+        </label>
+    </div>
+    <div class="switch">
+        <input id="levitate" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+        <label for="levitate">
+            <span>Levitate Activated</span>
+        </label>
+    </div>
+    <div class="switch">
+        <input id="break" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+        <label for="break">
+            <span>Broke, died, or fell over</span>
+        </label>
+    </div>
+    <div class="switch">
+        <input id="noshow" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+        <label for="noshow">
+            <span>No show</span>
+        </label>
+    </div>
+    <!--
     <table>
     <tr>
         <td style="width: 50%">
@@ -39,7 +63,7 @@
                     </div>
                 </td>
                 <td>
-                    <p style="float: left">Defense</p>
+                    <p style="float: left">Played Defense (for more than half the match)</p>
                 </td>
             </table>
         </td>
@@ -52,12 +76,12 @@
                     </div>
                 </td>
                 <td>
-                    <p style="float: left">Levitate</p>
+                    <p style="float: left">Levitate Activated</p>
                 </td>
             </table>
         </td>
     </tr>
-<!--
+
     <tr>
         <td style="width: 50%">
             <div style="margin-top: 27px" class="switch">
@@ -69,8 +93,8 @@
             <p style="float: left">Platform</p>
         </td>
     </tr>
--->
-    </table>
+
+    </table>-->
     <!--
     <table>
         <td style="width: 50%"><div style="margin-top: 27px" class="switch">
@@ -98,7 +122,7 @@
         <input id="43" value="2" type="radio" name="locOfDefense" disabled>
         <label class="right" style="width: 110px" for="43">Neutral</label>
     </div><br>
--->
+--><!--
     <br>
     <table style="margin-top: -20px">
         <td style="width: 33%">
@@ -152,21 +176,16 @@
         <input type="radio" id="4" value="3" type="radio" name="orientation">
         <label class="right" for="4">RLR</label>
     </div><br>
-    <button onclick="genQr()" style="height: 55px; width: 65px"><a id="demo01" href="#animatedModal"><img style="margin-top: 4px" width="40" height="40" src="qrcode.png"></a></button><br><br>
-
-
-
-
+    -->
+    <a onclick="genQr()" id="demo01" class="qrButton" href="#animatedModal">
+        <img width="40" height="40" src="qrcode.png"> Generate QR Code
+    </a>
 
     <!--DEMO01-->
     <div id="animatedModal">
-        <br><br>
         <div class="close-animatedModal">
-            <button style="width: 60px; height: 60px; border-radius: 60px;"><img width="15" height="15" src="close.png"></button>
-
+            <button>&times;</button>
         </div>
-        <br><br>
-
         <div class="modal-content">
             <div style="width: 80vh; margin: 0 auto" id="qrcode"></div>
         </div>
@@ -174,14 +193,13 @@
 
 
     <script src="jquery.min.js"></script>
-    <script src="animatedModal.min.js"></script>
     <script src="main.js"></script>
     <script>
-        $("#demo01").animatedModal({
-            animatedIn: "bounceInUp",
-            color: "#f5f5f5",
-            animatedOut: "bounceOutDown"
-        });
+      $('#demo01, .close-animatedModal,.modalShade').click(function() {
+        $('#demo01').toggleClass('active');
+        $('.modalShade').toggleClass('active');
+        $('#animatedModal').toggleClass('active animated bounceIn');
+      });
     </script>
 </body>
 
