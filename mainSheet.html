@@ -3,7 +3,7 @@
 
 <head>
 
-    <link rel="stylesheet" href="animate-bounceIn.css">
+    <link rel="stylesheet" href="animate.min.css">
     <link href="toggle.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
@@ -12,10 +12,9 @@
 
 </head>
 
-<body style="overflow:hidden;" onload="switchToAuton()" class="mapScreen">
-    <div class="modalShade" onclick="reset()"></div>
+<body style="overflow:hidden;" onload="startGameTimer()">
 
-    <div class="title-bar">
+    <div style="position: absolute; z-index: 999; margin-top: -5px" class="title-bar">
         <!--        <button onclick="location.replace('index.html')" class="leftArrow"><img width="50" height="50" src="leftArrow.png"></button>-->
 
         <!--
@@ -47,22 +46,29 @@
     <div class="background">
         <a id="demo01" href="#animatedModal">
             
-            <img id="picture" onclick="point_it(event)" src="/fieldSheet.svg"/>
+            <img id="picture" style="width: 80vw; height: 40vw; margin-top: 90px;" onclick="point_it(event)" src="fieldSheet.svg"/>
         
         </a>
-        <canvas id="picCanvas"></canvas>
+        <canvas id="picCanvas" style="position: fixed; z-index: 999;"></canvas>
+        <div id="snackbar">Some text some message..</div>
     </div>
     <!--Call your modal-->
     <!--    <a id="demo01" href="#animatedModal">DEMO01</a>-->
     <!--DEMO01-->
     <div id="animatedModal">
+        <br><br>
         <div class="close-animatedModal">
-            <button onclick="reset()">&times;</button>
+            <button class="close-animatedModal" onclick="newEvent()" style="left:auto; right: 7%;"><img width="15" height="15" src="check.png"></button>
 
         </div>
+        <div class="close-animatedModal">
+            <button class="close-animatedModal" onclick="reset()" style="left: 7%; right: auto "><img width="15" height="15" src="close.png"></button>
 
-        <div id="autonModal">
-               <!--<div style="margin-top: -70px" class="modal-content">
+        </div>
+        <br><br>
+
+        <div id="autonModal" style="text-align: center">
+ <!--           <div style="margin-top: -70px" class="modal-content">
                 <table id="leftCol" class="table-content">
                     <tr>
                         <td>
@@ -140,13 +146,13 @@
                     </tr>
 
                 </table>
-            </div> -->
+</div> -->
         </div>
 
-        <div id="hangingModal">
-            <!--
-            <tr>
-            <td>
+        <div id="hangingModal" style="text-align: center">
+<!--
+<tr>
+<td>
             <p class="title">CLIMBED</p>
             <table>
                 <td style="width: 50%">
@@ -166,9 +172,9 @@
                 <input type="radio" id="12" value="0" type="radio" name="climbed">
                 <label class="right" for="12">No</label>
             </div><br><br>
-            </td>
-            </tr>
-            -->
+</td>
+</tr>
+-->
             <!--
                     <p class="title">SOMEONE CLIMBED ON THEM?</p>
                     <div class="buttonCheckboxes">
@@ -177,11 +183,11 @@
                         <input type="radio" id="50" value="2" type="radio" name="climbed">
                         <label class="right" style="width: 120px" for="50">No</label>
                     </div>
-            -->
+        -->
         </div>
 
         <div id="mainModal">
-            <div class="modal-content">
+            <div style="margin-top: -70px" class="modal-content">
                 <table id="mainTable">
                     <tr>
                         <td>
@@ -191,11 +197,11 @@
                                 <label class="left" style="width: 130px;" for="7">Picked Up</label>
                                 <input type="radio" id="8" value="0" type="radio" name="cube">
                                 <label class="right" for="8">Dropped</label>
-                            </div>
+                            </div><br>
                         </td>
                     </tr>
                 </table>
-                <!--
+<!--
                 <table id="leftCol" class="table-content">
                     <tr>
                         <td>
@@ -206,7 +212,7 @@
                                 <label class="left" for="13">Scored</label>
                                 <input type="radio" id="14" value="0" type="radio" name="switch">
                                 <label class="right" for="14">Missed</label>
-                            </div>
+                            </div><br>
                         </td>
                     </tr>
                     <tr>
@@ -221,7 +227,7 @@
                                 <label for="17">Low</label>
                                 <input type="radio" id="18" value="0" type="radio" name="scale">
                                 <label class="right" for="18">Missed</label>
-                            </div>
+                            </div><br>
                         </td>
                     </tr>
                     <tr>
@@ -243,7 +249,7 @@
                                 <label class="left" for="11">Yes</label>
                                 <input type="radio" id="12" value="0" type="radio" name="climbed">
                                 <label class="right" for="12">No</label>
-                            </div>
+                            </div><br><br>
                         </td>
                     </tr>
                 </table>
@@ -257,16 +263,12 @@
                                 <label class="left" for="21">Scored</label>
                                 <input type="radio" id="22" value="0" type="radio" name="exchange">
                                 <label class="right" for="22" style="width: 130px">Attempted</label>
-                            </div>
+                            </div><br>
                         </td>
                     </tr>
                 </table>
-                -->
+-->
             </div>
-        </div>
-
-        <div class="close-animatedModal saveButton">
-            <button onclick="newEvent()">Save</button>
         </div>
     </div>
 
@@ -276,24 +278,12 @@
     <script src="jquery.min.js"></script>
     <script src="animatedModal.min.js"></script>
     <script src="main.js"></script>
-    <!--<script>
+    <script>
         $("#demo01").animatedModal({
             animatedIn: "bounceInUp",
             color: "#f5f5f5",
             animatedOut: "bounceOutDown"
         });
-    </script>-->
-    <script>
-      $('#demo01, .close-animatedModal, .modalShade').click(function() {
-        if ($('#demo01').hasClass('active')) {
-             var c = document.getElementById("picCanvas");
-            c.height = 0;
-            c.width = 0;
-        }
-        $('#demo01').toggleClass('active');
-        $('.modalShade').toggleClass('active');
-        $('#animatedModal').toggleClass('active');
-      });
     </script>
 </body>
 
